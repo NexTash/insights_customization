@@ -1,0 +1,4 @@
+from insights.insights.doctype.insights_query.insights_raw_query import InsightsRawQueryController
+from .Insights_raw_query_controller_override import InsightsRawQueryControllerOverride
+
+InsightsRawQueryController = InsightsRawQueryControllerOverride
