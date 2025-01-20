@@ -1,24 +1,25 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:filter_id",
  "creation": "2025-01-18 15:45:13.091403",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "details_section",
   "label",
-  "data_source",
   "column_break_bncb",
-  "reference_doctype",
-  "reference_doctype_fieldname",
+  "value",
+  "type",
   "column_settings_section",
+  "data_source",
   "name1",
   "column",
-  "type",
   "column_break_enrz",
+  "reference_doctype_fieldname",
+  "reference_doctype",
   "table",
   "description",
-  "value",
   "links_section",
   "dashboard",
   "charts",
@@ -33,11 +34,13 @@
   {
    "fieldname": "label",
    "fieldtype": "Data",
-   "label": "Label"
+   "label": "Label",
+   "reqd": 1
   },
   {
    "fieldname": "data_source",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Data Source",
    "options": "Insights Data Source"
   },
@@ -48,18 +51,24 @@
   {
    "fieldname": "reference_doctype",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Reference DocType"
   },
   {
    "fieldname": "reference_doctype_fieldname",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Reference DocType Fieldname"
   },
   {
    "collapsible": 1,
    "fieldname": "column_settings_section",
    "fieldtype": "Section Break",
-   "label": "Column Settings"
+   "label": "Column Settings",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1
   },
   {
    "fieldname": "name1",
@@ -75,9 +84,11 @@
   },
   {
    "fieldname": "type",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Type",
-   "read_only": 1
+   "options": "Check\nData\nDate\nDatetime\nFloat\nInt\nPercent\nTime",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_enrz",
@@ -98,7 +109,9 @@
   {
    "fieldname": "value",
    "fieldtype": "Data",
-   "label": "Value"
+   "hidden": 1,
+   "label": "Value",
+   "no_copy": 1
   },
   {
    "fieldname": "links_section",
@@ -115,21 +128,24 @@
    "fieldname": "charts",
    "fieldtype": "Table",
    "label": "Charts",
-   "options": "Insights Dashboard Filter Links"
+   "options": "Insights Dashboard Filter Links",
+   "reqd": 1
   },
   {
    "fieldname": "filter_id",
    "fieldtype": "Data",
    "label": "Filter ID",
-   "read_only": 1
+   "read_only": 1,
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-20 13:13:36.770825",
+ "modified": "2025-01-20 17:13:32.938653",
  "modified_by": "Administrator",
  "module": "Insights Customization",
  "name": "Insights Custom Query Filter",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
