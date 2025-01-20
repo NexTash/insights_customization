@@ -1,0 +1,151 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-18 15:45:13.091403",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_section",
+  "label",
+  "data_source",
+  "column_break_bncb",
+  "reference_doctype",
+  "reference_doctype_fieldname",
+  "column_settings_section",
+  "name1",
+  "column",
+  "type",
+  "column_break_enrz",
+  "table",
+  "description",
+  "value",
+  "links_section",
+  "dashboard",
+  "charts",
+  "filter_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "label": "Label"
+  },
+  {
+   "fieldname": "data_source",
+   "fieldtype": "Link",
+   "label": "Data Source",
+   "options": "Insights Data Source"
+  },
+  {
+   "fieldname": "column_break_bncb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Data",
+   "label": "Reference DocType"
+  },
+  {
+   "fieldname": "reference_doctype_fieldname",
+   "fieldtype": "Data",
+   "label": "Reference DocType Fieldname"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "column_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Column Settings"
+  },
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column",
+   "fieldtype": "Data",
+   "label": "Column",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "label": "Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_enrz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "table",
+   "fieldtype": "Data",
+   "label": "Table",
+   "read_only": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Description",
+   "read_only": 1
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "label": "Value"
+  },
+  {
+   "fieldname": "links_section",
+   "fieldtype": "Section Break",
+   "label": "Links"
+  },
+  {
+   "fieldname": "dashboard",
+   "fieldtype": "Link",
+   "label": "Dashboard",
+   "options": "Insights Dashboard"
+  },
+  {
+   "fieldname": "charts",
+   "fieldtype": "Table",
+   "label": "Charts",
+   "options": "Insights Dashboard Filter Links"
+  },
+  {
+   "fieldname": "filter_id",
+   "fieldtype": "Data",
+   "label": "Filter ID",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-20 13:13:36.770825",
+ "modified_by": "Administrator",
+ "module": "Insights Customization",
+ "name": "Insights Custom Query Filter",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

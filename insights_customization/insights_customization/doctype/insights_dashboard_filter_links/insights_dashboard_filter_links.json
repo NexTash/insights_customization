@@ -1,0 +1,99 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-18 16:06:43.739651",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "details_section",
+  "id",
+  "label",
+  "column",
+  "table_label",
+  "table",
+  "column_break_mseq",
+  "data_source",
+  "type",
+  "description",
+  "value"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ID"
+  },
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Label"
+  },
+  {
+   "fieldname": "column",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Column"
+  },
+  {
+   "fieldname": "table_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Table Label"
+  },
+  {
+   "fieldname": "table",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Table"
+  },
+  {
+   "fieldname": "column_break_mseq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "data_source",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Data Source",
+   "options": "Insights Data Source"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Type"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Description"
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Value"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-01-20 13:14:12.154033",
+ "modified_by": "Administrator",
+ "module": "Insights Customization",
+ "name": "Insights Dashboard Filter Links",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
