@@ -64,20 +64,25 @@ def execute(filters=None):
         data.append({"account_name": _("Cost of Goods Sold"), "account": None, "indent": 0, "is_group": 1})
         data.extend(cogs)
 
-        gross_profit = calculate_gross_profit(income, cogs, period_list)
+        # Calculate Gross Profit
+        gross_profit = {"account_name": _("Gross Profit"), "account": None, "indent": 0, "is_group": 0}
 
-        if gross_profit:
-            # First append the general gross profit entry
-            # data.append({
-            #     "account_name": _("Gross Profit"),
-            #     "account": None,
-            #     "indent": 0,
-            #     "is_group": 0
-            # })
+        for period in period_list:
+            key = period.key
 
-            # Now, append the actual gross profit values for each period
-            for period_data in gross_profit:
-                data.append(period_data)
+            # Calculate total income and COGS for the current period using only leaf nodes
+            total_income = sum(
+                row.get(key, 0) for row in income if row.get("indent", 0) > 0 and not row.get("is_group", 0)
+            )
+            total_cogs = sum(
+                row.get(key, 0) for row in cogs if row.get("indent", 0) > 0 and not row.get("is_group", 0)
+            )
+
+            # Assign the gross profit for this period
+            gross_profit[key] = total_income - total_cogs
+
+        # Append Gross Profit row after COGS
+        data.append(gross_profit)
 
     if other_expenses:
         data.append({"account_name": _("Other Expenses"), "account": None, "indent": 0, "is_group": 1})
@@ -246,41 +251,3 @@ def get_chart_data(filters, columns, income, expense, net_profit_loss):
 	chart["fieldtype"] = "Currency"
 
 	return chart
-
-def calculate_gross_profit(income, cogs, period_list):
-    gross_profit = []
-
-    # Iterate through each period
-    for period in period_list:
-        key = period.key  # Get the period key (e.g., jan_2025)
-
-        # Get income for the period, excluding groups or totals
-        period_income = [
-            row for row in income
-            if key in row and flt(row.get(key)) > 0 and not row.get("is_group") and not row.get("account_name", "").startswith("'Total")
-        ]
-        
-        # Get Cost of Goods Sold (COGS) for the period, excluding groups
-        period_cogs = [
-            row for row in cogs
-            if key in row and flt(row.get(key)) > 0 and not row.get("is_group")
-        ]
-
-        # Sum up income and COGS for the current period
-        total_income = sum(flt(row.get(key), 3) for row in period_income)
-        total_cogs = sum(flt(row.get(key), 3) for row in period_cogs)
-
-        # Calculate the gross profit for the current period
-        gross_profit_value = total_income - total_cogs
-
-        # Only add a "Gross Profit" entry if there is a valid gross profit value
-        if gross_profit_value != 0:
-            gross_profit.append({
-                "account_name": _("Gross Profit"),
-                "account": None,
-                key: gross_profit_value,
-                "currency": frappe.defaults.get_global_default("currency"),
-            })
-
-    # Return the list with gross profit calculated for each period
-    return gross_profit
