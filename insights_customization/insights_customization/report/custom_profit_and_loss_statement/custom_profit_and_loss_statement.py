@@ -249,31 +249,38 @@ def get_chart_data(filters, columns, income, expense, net_profit_loss):
 
 def calculate_gross_profit(income, cogs, period_list):
     gross_profit = []
-    for period in period_list:
-        key = period.key  # Ensure we use the same key for both income and cogs
 
-        # Filter income and COGS data for the current period
+    # Iterate through each period
+    for period in period_list:
+        key = period.key  # Get the period key (e.g., jan_2025)
+
+        # Get income for the period, excluding groups or totals
         period_income = [
             row for row in income
             if key in row and flt(row.get(key)) > 0 and not row.get("is_group") and not row.get("account_name", "").startswith("'Total")
         ]
+        
+        # Get Cost of Goods Sold (COGS) for the period, excluding groups
         period_cogs = [
             row for row in cogs
             if key in row and flt(row.get(key)) > 0 and not row.get("is_group")
         ]
 
-        # Calculate total income and COGS for the period
+        # Sum up income and COGS for the current period
         total_income = sum(flt(row.get(key), 3) for row in period_income)
         total_cogs = sum(flt(row.get(key), 3) for row in period_cogs)
 
-        # Calculate gross profit
+        # Calculate the gross profit for the current period
         gross_profit_value = total_income - total_cogs
 
-        # Append the calculated value to the gross profit list
-        gross_profit.append({
-            "account_name": _("Gross Profit"),
-            "account": None,
-            key: gross_profit_value,
-            "currency": frappe.defaults.get_global_default("currency"),
-        })
+        # Only add a "Gross Profit" entry if there is a valid gross profit value
+        if gross_profit_value != 0:
+            gross_profit.append({
+                "account_name": _("Gross Profit"),
+                "account": None,
+                key: gross_profit_value,
+                "currency": frappe.defaults.get_global_default("currency"),
+            })
+
+    # Return the list with gross profit calculated for each period
     return gross_profit
