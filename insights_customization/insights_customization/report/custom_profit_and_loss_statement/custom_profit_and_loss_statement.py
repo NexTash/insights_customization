@@ -53,6 +53,7 @@ def execute(filters=None):
     cogs_accounts = frappe.get_all("Account", filters={"account_type": "Cost of Goods Sold"}, pluck="name")
     cogs = [row for row in expense if "account" in row and row["account"] in cogs_accounts]
     other_expenses = [row for row in expense if "account" in row and row["account"] not in cogs_accounts]
+    
 
     # Prepare the data for the report
     data = []
@@ -62,6 +63,22 @@ def execute(filters=None):
     if cogs:
         data.append({"account_name": _("Cost of Goods Sold"), "account": None, "indent": 0, "is_group": 1})
         data.extend(cogs)
+
+        gross_profit = calculate_gross_profit(income, cogs, period_list)
+
+        if gross_profit:
+            # First append the general gross profit entry
+            # data.append({
+            #     "account_name": _("Gross Profit"),
+            #     "account": None,
+            #     "indent": 0,
+            #     "is_group": 0
+            # })
+
+            # Now, append the actual gross profit values for each period
+            for period_data in gross_profit:
+                data.append(period_data)
+
     if other_expenses:
         data.append({"account_name": _("Other Expenses"), "account": None, "indent": 0, "is_group": 1})
         data.extend(other_expenses)
@@ -191,7 +208,7 @@ def get_chart_data(filters, columns, income, expense, net_profit_loss):
 			expense_data.append(expense[-2].get(p.get("fieldname")))
 		if net_profit_loss:
 			net_profit.append(net_profit_loss.get(p.get("fieldname")))
-
+    
 	datasets = []
 	if income_data:
 		datasets.append({"name": _("Income"), "values": income_data})
@@ -201,8 +218,9 @@ def get_chart_data(filters, columns, income, expense, net_profit_loss):
 		datasets.append({"name": _("Expense"), "values": expense_data})
 	if net_profit:
 		datasets.append({"name": _("Net Profit/Loss"), "values": net_profit})
-	
-	
+
+
+
 	# for p in columns[2:]:
 	# 	if income:
 	# 		income_data.append(income[-2].get(p.get("fieldname")))
@@ -228,3 +246,34 @@ def get_chart_data(filters, columns, income, expense, net_profit_loss):
 	chart["fieldtype"] = "Currency"
 
 	return chart
+
+def calculate_gross_profit(income, cogs, period_list):
+    gross_profit = []
+    for period in period_list:
+        key = period.key  # Ensure we use the same key for both income and cogs
+
+        # Filter income and COGS data for the current period
+        period_income = [
+            row for row in income
+            if key in row and flt(row.get(key)) > 0 and not row.get("is_group") and not row.get("account_name", "").startswith("'Total")
+        ]
+        period_cogs = [
+            row for row in cogs
+            if key in row and flt(row.get(key)) > 0 and not row.get("is_group")
+        ]
+
+        # Calculate total income and COGS for the period
+        total_income = sum(flt(row.get(key), 3) for row in period_income)
+        total_cogs = sum(flt(row.get(key), 3) for row in period_cogs)
+
+        # Calculate gross profit
+        gross_profit_value = total_income - total_cogs
+
+        # Append the calculated value to the gross profit list
+        gross_profit.append({
+            "account_name": _("Gross Profit"),
+            "account": None,
+            key: gross_profit_value,
+            "currency": frappe.defaults.get_global_default("currency"),
+        })
+    return gross_profit
