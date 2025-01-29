@@ -67,7 +67,7 @@ def get_insights_dashboard_item(doctype, txt, searchfield, start, page_len, filt
 			JOIN
 				`tabInsights Dashboard` id_parent ON id_item.parent = id_parent.name
 			WHERE
-				id_item.item_type = 'Row' AND
+				id_item.item_type != 'Filter' AND
 				id_parent.name = '{filters.get("dashboard")}';
 		"""
 
